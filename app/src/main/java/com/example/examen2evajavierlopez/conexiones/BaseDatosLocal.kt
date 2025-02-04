@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.examen2evajavierlopez.dao.DaoBaseDatos
+import com.example.examen2evajavierlopez.modelos.ObjetoLocal
 
-@Database(entities = [Favoritos::class], version = 1, exportSchema = false)
+@Database(entities = [ObjetoLocal::class], version = 1, exportSchema = false)
 abstract class BaseDatosLocal : RoomDatabase() {
 
     abstract fun daoBaseDatos(): DaoBaseDatos
