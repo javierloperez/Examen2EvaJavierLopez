@@ -10,26 +10,26 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface ParquesServicioApi {
-    @GET("parques")
+    @GET("")
     suspend fun obtenerTodos(): List<ObjetoJson>
 
-    @GET("parques/{id}")
+    @GET("/{id}")
     suspend fun obtenerUno(
     @Path("id") id:Int
     ):ObjetoJson
 
-    @POST("parques")
+    @POST("")
     suspend fun insertar(
         @Body parque: ObjetoJson
     ): ObjetoJson
 
-    @PUT("parques/{id}")
+    @PUT("/{id}")
     suspend fun actualizar(
         @Path("id") id: Int,
         @Body parques: ObjetoJson
     ): ObjetoJson
 
-    @DELETE("parques/{id}")
+    @DELETE("/{id}")
     suspend fun eliminar(
         @Path("id") id: Int
     ):ObjetoJson
