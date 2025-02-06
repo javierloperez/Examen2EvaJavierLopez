@@ -10,4 +10,6 @@
     <string name="hora_seleccionada">Hora seleccionada</string>
     <string name="mostrar_hora">Mostrar hora</string>
     <string name="mostrar_fecha">Mostrar fecha</string>
+    <string name="cargando">Cargando</string>
+    <string name="error">Error</string>
 </resources>
