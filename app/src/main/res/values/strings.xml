@@ -4,4 +4,10 @@
     <string name="insertar">Insertar</string>
     <string name="actualizar">Actualizar</string>
     <string name="inicio">Inicio</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="fecha_seleccionada">Fecha seleccionada</string>
+    <string name="hora_seleccionada">Hora seleccionada</string>
+    <string name="mostrar_hora">Mostrar hora</string>
+    <string name="mostrar_fecha">Mostrar fecha</string>
 </resources>

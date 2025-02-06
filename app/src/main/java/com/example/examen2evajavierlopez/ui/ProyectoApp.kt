@@ -1,5 +1,6 @@
 package com.example.examen2evajavierlopez.ui
 
+import PantallaInicio
 import android.app.Activity
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
@@ -156,6 +157,10 @@ fun ProyectoApp(
                              navController.navigate(Pantallas.Actualizar.name)
                          }
                      )*/
+                    PantallaInicio(
+                        modifier = Modifier
+                            .fillMaxSize()
+                    )
                 }
 
                 composable(route = Pantallas.Actualizar.name) {

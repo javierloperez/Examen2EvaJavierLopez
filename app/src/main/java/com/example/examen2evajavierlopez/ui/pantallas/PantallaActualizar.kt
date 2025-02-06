@@ -6,5 +6,10 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun PantallaActualizar(modifier: Modifier, objeto: Any?, onObjetoActualizado: () -> Boolean) {
-    Text("Hola")
+
+    when(objeto){
+
+    }
+
 }
+
