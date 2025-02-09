@@ -9,10 +9,10 @@ import com.example.proyectofinal.conexiones.ParquesServicioApi
 
 interface JsonRepositorio {
     suspend fun obtenerTodos(): List<ObjetoJson>
-    suspend fun obtenerUno(id:Int): ObjetoJson
+    suspend fun obtenerUno(id:String): ObjetoJson
     suspend fun insertar(objeto: ObjetoJson):ObjetoJson
-    suspend fun eliminar(id:Int):ObjetoJson
-    suspend fun actualizar(id:Int,objeto: ObjetoJson):ObjetoJson
+    suspend fun eliminar(id:String):ObjetoJson
+    suspend fun actualizar(id:String,objeto: ObjetoJson):ObjetoJson
 }
 
 interface BaseLocalRepositorio {
@@ -49,16 +49,16 @@ class ConexionParquesRepositorio(
     override suspend fun obtenerTodos(): List<ObjetoJson> =
         servicioApi.obtenerTodos()
 
-    override suspend fun obtenerUno(id:Int): ObjetoJson =
+    override suspend fun obtenerUno(id:String): ObjetoJson =
         servicioApi.obtenerUno(id,)
 
     override suspend fun insertar(objeto: ObjetoJson): ObjetoJson =
         servicioApi.insertar(objeto)
 
-    override suspend fun actualizar(id:Int, objeto: ObjetoJson): ObjetoJson =
+    override suspend fun actualizar(id:String, objeto: ObjetoJson): ObjetoJson =
         servicioApi.actualizar(id,objeto)
 
-    override suspend fun eliminar(id:Int): ObjetoJson =
+    override suspend fun eliminar(id:String): ObjetoJson =
         servicioApi.eliminar(id)
 
 }

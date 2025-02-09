@@ -15,7 +15,7 @@ interface ParquesServicioApi {
 
     @GET("/{id}")
     suspend fun obtenerUno(
-    @Path("id") id:Int
+    @Path("id") id:String
     ):ObjetoJson
 
     @POST("")
@@ -25,13 +25,13 @@ interface ParquesServicioApi {
 
     @PUT("/{id}")
     suspend fun actualizar(
-        @Path("id") id: Int,
+        @Path("id") id: String,
         @Body parques: ObjetoJson
     ): ObjetoJson
 
     @DELETE("/{id}")
     suspend fun eliminar(
-        @Path("id") id: Int
+        @Path("id") id: String
     ):ObjetoJson
 
 

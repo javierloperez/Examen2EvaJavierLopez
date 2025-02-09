@@ -9,7 +9,7 @@ import java.io.Serial
 class ObjetoJson(
 
     @SerialName(value = "id")
-    val id:Int = 0,
+    val id:String = "",
     @SerialName(value = "aux")
     val aux:String
 )

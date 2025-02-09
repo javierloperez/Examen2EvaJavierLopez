@@ -88,7 +88,8 @@ fun ProyectoApp(
         pilaRetroceso?.destination?.route ?: Pantallas.Inicio.name
     )
 
-    val uiState = viewModel.appUIstate
+    val uiStateJson = viewModel.appUIstateJson
+    val uiStateLocal = viewModel.appUIstateLocal
 
 
     var pantallaElegida by remember { mutableStateOf(Pantallas.Inicio) }
@@ -146,21 +147,17 @@ fun ProyectoApp(
 
                 composable(route = Pantallas.Inicio.name) {
                     pantallaElegida = Pantallas.Inicio
-                    /* PantallaInicio(
-                         appUIState = uiStateParque,
-                         onObtenerParques = { viewModel.obtenerParques() },
+                     PantallaInicio(
+                         appUIState = uiStateJson,
+                         onObtenerJson = { viewModel.obtenerTodosJson() },
                          modifier = Modifier
                              .fillMaxSize(),
-                         onEliminarParque = { viewModel.eliminarParque(it) },
+                         onEliminarJson = { viewModel.eliminarJson(it) },
                          onPulsarActualizar = {
                              viewModel.actualizarObjetoPulsado(it)
                              navController.navigate(Pantallas.Actualizar.name)
                          }
-                     )*/
-                    PantallaInicio(
-                        modifier = Modifier
-                            .fillMaxSize()
-                    )
+                     )
                 }
 
                 composable(route = Pantallas.Actualizar.name) {

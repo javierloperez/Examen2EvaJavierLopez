@@ -12,4 +12,6 @@
     <string name="mostrar_fecha">Mostrar fecha</string>
     <string name="cargando">Cargando</string>
     <string name="error">Error</string>
+    <string name="tituloEliminar">¿Desea eliminar?</string>
+    <string name="id">Id</string>
 </resources>

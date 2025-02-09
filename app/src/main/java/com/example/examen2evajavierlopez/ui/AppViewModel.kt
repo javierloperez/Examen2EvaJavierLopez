@@ -16,19 +16,32 @@ import com.example.examen2evajavierlopez.modelos.ObjetoJson
 import com.example.examen2evajavierlopez.modelos.ObjetoLocal
 import kotlinx.coroutines.launch
 
-sealed interface AppUIstate {
-    data class ObtenerTodosExitoJson(val objeto: List<ObjetoJson>) : AppUIstate
-    data class ObtenerUnoExitoJson(val objeto: ObjetoJson) : AppUIstate
-    data class ObtenerTodosExitoLocal(val objeto: List<ObjetoLocal>) : AppUIstate
-    data class ObtenerUnoExitoLocal(val objeto: ObjetoLocal) : AppUIstate
+sealed interface AppUIstateJson {
+    data class ObtenerTodosExitoJson(val objeto: List<ObjetoJson>) : AppUIstateJson
+    data class ObtenerUnoExitoJson(val objeto: ObjetoJson) : AppUIstateJson
 
 
 
-    object CrearExito : AppUIstate
-    object Cargando : AppUIstate
-    object Error : AppUIstate
-    object ActualizarExito : AppUIstate
-    object EliminarExito : AppUIstate
+
+    object CrearExito : AppUIstateJson
+    object Cargando : AppUIstateJson
+    object Error : AppUIstateJson
+    object ActualizarExito : AppUIstateJson
+    object EliminarExito : AppUIstateJson
+
+}
+
+sealed interface AppUIstateLocal {
+    data class ObtenerTodosExitoLocal(val objeto: List<ObjetoLocal>) : AppUIstateLocal
+    data class ObtenerUnoExitoLocal(val objeto: ObjetoLocal) : AppUIstateLocal
+
+
+
+    object CrearExito : AppUIstateLocal
+    object Cargando : AppUIstateLocal
+    object Error : AppUIstateLocal
+    object ActualizarExito : AppUIstateLocal
+    object EliminarExito : AppUIstateLocal
 
 }
 
@@ -38,7 +51,10 @@ class AppViewModel(
     private val jsonRepositorio: JsonRepositorio
 ) : ViewModel() {
 
-    var appUIstate: AppUIstate by mutableStateOf(AppUIstate.Cargando)
+    var appUIstateJson: AppUIstateJson by mutableStateOf(AppUIstateJson.Cargando)
+        private set
+
+    var appUIstateLocal: AppUIstateLocal by mutableStateOf(AppUIstateLocal.Cargando)
         private set
 
 
@@ -51,8 +67,7 @@ class AppViewModel(
     }
 
     init {
-        //obtenerJson()
-
+        obtenerTodosJson()
     }
 
     fun actualizarObjeto(objeto: Any) {
@@ -62,18 +77,18 @@ class AppViewModel(
                 when (objeto) {
                     is ObjetoJson -> {
                         jsonRepositorio.actualizar(objeto.id, objeto)
-                        appUIstate = AppUIstate.ActualizarExito
+                        appUIstateJson = AppUIstateJson.ActualizarExito
                     }
 
                     is ObjetoLocal -> {
                         baseLocalRepositorio.actualizarLocal(objeto)
-                        appUIstate = AppUIstate.ActualizarExito
+                        appUIstateLocal = AppUIstateLocal.ActualizarExito
                     }
 
                 }
 
             } catch (e: Exception) {
-                AppUIstate.Error
+                AppUIstateJson.Error
             }
         }
     }
@@ -85,52 +100,52 @@ class AppViewModel(
                 when (objeto) {
                     is ObjetoJson -> {
                         jsonRepositorio.insertar(objeto)
-                        appUIstate = AppUIstate.CrearExito
+                        appUIstateJson = AppUIstateJson.CrearExito
                     }
 
                     is ObjetoLocal -> {
                         baseLocalRepositorio.insertarLocal(objeto)
-                        appUIstate = AppUIstate.CrearExito
+                        appUIstateLocal = AppUIstateLocal.CrearExito
                     }
                 }
 
             } catch (e: Exception) {
-                AppUIstate.Error
+                AppUIstateJson.Error
             }
         }
     }
     fun obtenerTodosJson() {
         viewModelScope.launch {
-            appUIstate = AppUIstate.Cargando
-            appUIstate = try {
+            appUIstateJson = AppUIstateJson.Cargando
+            appUIstateJson = try {
                 val lista = jsonRepositorio.obtenerTodos()
-                AppUIstate.ObtenerTodosExitoJson(lista)
+                AppUIstateJson.ObtenerTodosExitoJson(lista)
             } catch (e: Exception) {
-                AppUIstate.Error
+                AppUIstateJson.Error
             }
         }
     }
 
-    fun obtenerUnoJson(id : Int) {
+    fun obtenerUnoJson(id : String) {
         viewModelScope.launch {
-            appUIstate = AppUIstate.Cargando
-            appUIstate = try {
+            appUIstateJson = AppUIstateJson.Cargando
+            appUIstateJson = try {
                 val objeto = jsonRepositorio.obtenerUno(id)
-                AppUIstate.ObtenerUnoExitoJson(objeto)
+                AppUIstateJson.ObtenerUnoExitoJson(objeto)
             } catch (e: Exception) {
-                AppUIstate.Error
+                AppUIstateJson.Error
             }
         }
     }
 
 
-    fun eliminarJson(id: Int) {
+    fun eliminarJson(id: String) {
         viewModelScope.launch {
-            appUIstate = try {
+            appUIstateJson = try {
                 jsonRepositorio.eliminar(id)
-                AppUIstate.EliminarExito
+                AppUIstateJson.EliminarExito
             } catch (e: Exception) {
-                AppUIstate.Error
+                AppUIstateJson.Error
             }
         }
     }
@@ -138,22 +153,22 @@ class AppViewModel(
 
     fun obtenerTodosLocal() {
         viewModelScope.launch {
-            try {
+           appUIstateLocal = try {
                 val lista = baseLocalRepositorio.obtenerTodosLocal()
-                AppUIstate.ObtenerTodosExitoLocal(lista)
+                AppUIstateLocal.ObtenerTodosExitoLocal(lista)
             } catch (e: Exception) {
-                AppUIstate.Error
+                AppUIstateLocal.Error
             }
         }
     }
 
     fun obtenerUnoLocal(id : Int) {
         viewModelScope.launch {
-            try {
+            appUIstateLocal = try {
                 val objeto = baseLocalRepositorio.obtenerUnoLocal(id)
-                AppUIstate.ObtenerUnoExitoLocal(objeto)
+                AppUIstateLocal.ObtenerUnoExitoLocal(objeto)
             } catch (e: Exception) {
-                AppUIstate.Error
+                AppUIstateLocal.Error
             }
         }
     }
@@ -161,11 +176,11 @@ class AppViewModel(
 
     fun eliminarLocal(objetoLocal: ObjetoLocal) {
         viewModelScope.launch {
-            appUIstate = try {
+            appUIstateLocal = try {
                 baseLocalRepositorio.eliminarLocal(objetoLocal)
-                AppUIstate.EliminarExito
+                AppUIstateLocal.EliminarExito
             } catch (e: Exception) {
-                AppUIstate.Error
+                AppUIstateLocal.Error
             }
         }
     }
